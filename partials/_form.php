@@ -20,21 +20,28 @@
                 <form action="show.php" method="POST">
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" class="form-control">
+                        <input type="text" name="name" class="form-control"
+                          value="<?php if (isset($_SESSION['name'])) echo $_SESSION['name'] ?>">
                     </div>
                     
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" name="email" class="form-control">
+                        <input type="text" name="email" class="form-control"
+                          value="<?php if (isset($_SESSION['email'])) echo $_SESSION['email'] ?>">
                     </div>
                     
                     <div class="form-group">
                         <label for="issue">Your issue:  </label>
-                        <select name="issue" id="si" clas="form-control">
-                            <option value="query">Query</option>
-                            <option value="feedback">Feedback</option>
-                            <option value="complaint">Complaint</option>
-                            <option value="other">Other</option>
+                        <select name="issue" id="si" clas="form-control"
+                          value="<?php if (isset($_SESSION['issue'])) echo $_SESSION['issue'] . ' selected'?>">
+                            <option value="query" 
+                            <?php if (isset($_SESSION['issue']) && $_SESSION['issue'] == 'query') echo "selected" ?>>Query</option>
+                            <option value="feedback"
+                            <?php if (isset($_SESSION['issue']) && $_SESSION['issue'] == 'feedback') echo "selected" ?>>Feedback</option>
+                            <option value="complaint"
+                            <?php if (isset($_SESSION['issue']) && $_SESSION['issue'] == 'complaint') echo "selected" ?>>Complaint</option>
+                            <option value="other"
+                            <?php if (isset($_SESSION['issue']) && $_SESSION['issue'] == 'other') echo "selected" ?>>Other</option>
                         </select>
                     </div>
                     
@@ -43,6 +50,12 @@
                         <textarea name="description" cols="30" rows="2" class="form-control"></textarea>
                         <script>
                             CKEDITOR.replace( 'description' );
+                            <?php
+                                $var = $_SESSION['description'];
+                                echo isset($_SESSION['description']) ? "let jsvar ='$var';" : "let jsvar = ''";
+                            ?>
+                            CKEDITOR.instances['description'].
+                            setData(jsvar);
                         </script>
                     </div>
                     
